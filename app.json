@@ -1,41 +1,113 @@
 {
-  "expo": {
-    "name": "to-do-firebase",
-    "slug": "to-do-firebase",
-    "version": "1.0.0",
-    "orientation": "portrait",
-    "icon": "./assets/images/icon.png",
-    "scheme": "myapp",
-    "userInterfaceStyle": "automatic",
-    "newArchEnabled": true,
-    "ios": {
-      "supportsTablet": true
-    },
-    "android": {
-      "adaptiveIcon": {
-        "foregroundImage": "./assets/images/adaptive-icon.png",
-        "backgroundColor": "#ffffff"
-      }
-    },
-    "web": {
-      "bundler": "metro",
-      "output": "static",
-      "favicon": "./assets/images/favicon.png"
-    },
-    "plugins": [
-      "expo-router",
-      [
-        "expo-splash-screen",
-        {
-          "image": "./assets/images/splash-icon.png",
-          "imageWidth": 200,
-          "resizeMode": "contain",
-          "backgroundColor": "#ffffff"
-        }
-      ]
-    ],
-    "experiments": {
-      "typedRoutes": true
-    }
-  }
+	"expo": {
+		"name": "to-do-firebase",
+		"slug": "to-do-firebase",
+		"version": "1.0.0",
+		"orientation": "portrait",
+		"icon": "./assets/images/icon.png",
+		"scheme": "myapp",
+		"userInterfaceStyle": "automatic",
+		"newArchEnabled": true,
+		"ios": {
+			"supportsTablet": true
+		},
+		"android": {
+			"adaptiveIcon": {
+				"foregroundImage": "./assets/images/adaptive-icon.png",
+				"backgroundColor": "#ffffff"
+			},
+			"package": "com.lennypk.todofirebase"
+		},
+		"web": {
+			"bundler": "metro",
+			"output": "static",
+			"favicon": "./assets/images/favicon.png"
+		},
+		"plugins": [
+			"expo-router",
+			[
+				"expo-splash-screen",
+				{
+					"image": "./assets/images/splash-icon.png",
+					"imageWidth": 200,
+					"resizeMode": "contain",
+					"backgroundColor": "#ffffff"
+				}
+			],
+			[
+				"@react-native-community/datetimepicker",
+				{
+					"android": {
+						"datePicker": {
+							"colorAccent": {
+								"light": "#6750a4",
+								"dark": "#d0bcff"
+							},
+							"colorControlActivated": {
+								"light": "#6750a4",
+								"dark": "#d0bcff"
+							},
+							"colorControlHighlight": {
+								"light": "#6750a4",
+								"dark": "#d0bcff"
+							},
+							"selectableItemBackgroundBorderless": {
+								"light": "#e7e0ec",
+								"dark": "#49454f"
+							},
+							"textColor": {
+								"light": "#6750a4",
+								"dark": "#d0bcff"
+							},
+							"textColorPrimary": {
+								"light": "#1c1b1f",
+								"dark": "#e6e1e5"
+							},
+							"textColorPrimaryInverse": {
+								"light": "#ffffff",
+								"dark": "#381e72"
+							},
+							"textColorSecondary": {
+								"light": "#49454f",
+								"dark": "#cac4d0"
+							},
+							"textColorSecondaryInverse": {
+								"light": "#ffffff",
+								"dark": "#381e72"
+							},
+							"windowBackground": {
+								"light": "#fffbfe",
+								"dark": "#1c1b1f"
+							}
+						},
+						"timePicker": {
+							"background": {
+								"light": "#fffbfe",
+								"dark": "#1c1b1f"
+							},
+							"headerBackground": {
+								"light": "#6750a4",
+								"dark": "#d0bcff"
+							},
+							"numbersBackgroundColor": {
+								"light": "#eaddff",
+								"dark": "#4f378b"
+							},
+							"numbersSelectorColor": {
+								"light": "#6750a4",
+								"dark": "#d0bcff"
+							},
+							"numbersTextColor": {
+								"light": "#21005d",
+								"dark": "#eaddff"
+							}
+						}
+					}
+				}
+			]
+		],
+		"experiments": {
+			"typedRoutes": true
+		}
+	}
 }
