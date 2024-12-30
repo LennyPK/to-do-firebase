@@ -1,5 +1,13 @@
 import { useTheme } from "@/hooks/useTheme";
-import { useColorScheme, View, ViewProps } from "react-native";
+import {
+	Keyboard,
+	KeyboardAvoidingView,
+	Platform,
+	TouchableWithoutFeedback,
+	useColorScheme,
+	View,
+	ViewProps,
+} from "react-native";
 
 export type ThemedViewProps = ViewProps & {
 	overrideLight?: string;
@@ -20,9 +28,15 @@ export default function ThemedView({
 	const backgroundColor = overrideColor || colors.background;
 
 	return (
-		<View
-			style={[{ backgroundColor: backgroundColor }, style]}
-			{...props}
-		/>
+		<KeyboardAvoidingView
+			behavior={Platform.OS === "ios" ? "padding" : "height"}
+		>
+			<TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+				<View
+					style={[{ backgroundColor: backgroundColor }, style]}
+					{...props}
+				/>
+			</TouchableWithoutFeedback>
+		</KeyboardAvoidingView>
 	);
 }

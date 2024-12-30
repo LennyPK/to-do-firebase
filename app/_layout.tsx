@@ -1,15 +1,27 @@
 import { useTheme } from "@/hooks/useTheme";
 import { BottomSheetModalProvider } from "@gorhom/bottom-sheet";
-import { Stack } from "expo-router";
+import { Stack, useRouter, useSegments } from "expo-router";
 import { StatusBar } from "expo-status-bar";
-import React from "react";
+import React, { useEffect } from "react";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { PaperProvider } from "react-native-paper";
 import { en, registerTranslation } from "react-native-paper-dates";
 
 export default function RootLayout() {
-	const theme = useTheme();
 	registerTranslation("en", en);
+
+	const router = useRouter();
+	const theme = useTheme();
+	const isAuthenticated = true;
+	const authGroup = useSegments()[0] === "(auth)";
+
+	useEffect(() => {
+		if (isAuthenticated && authGroup) {
+			router.replace("/(app)/(tabs)");
+		} else if (!isAuthenticated && !authGroup) {
+			router.replace("/(auth)/login");
+		}
+	});
 
 	return (
 		<>
@@ -19,10 +31,23 @@ export default function RootLayout() {
 						<StatusBar hidden={false} />
 						<Stack>
 							<Stack.Screen
-								name="(tabs)"
+								name="(app)/(tabs)"
 								options={{ headerShown: false }}
 							/>
-							<Stack.Screen name="+not-found" />
+							<Stack.Screen
+								name="(app)/add"
+								options={{ headerShown: false }}
+							/>
+
+							<Stack.Screen
+								name="(auth)/login"
+								options={{ headerShown: false }}
+							/>
+
+							<Stack.Screen
+								name="+not-found"
+								options={{ headerShown: false }}
+							/>
 						</Stack>
 					</PaperProvider>
 				</BottomSheetModalProvider>
