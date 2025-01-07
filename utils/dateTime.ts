@@ -1,11 +1,20 @@
 import { CalendarDate } from "react-native-paper-dates/lib/typescript/Date/Calendar";
 
-export function to12HourFormat(hours: number, minutes: number): string {
+export function to12HourFormat(date: Date): string {
+	// const ampm = hours >= 12 ? "PM" : "AM";
+	// let hours12 = hours % 12;
+	// if (hours12 === 0) hours12 = 12;
+	// const hoursFormatted = String(hours12).padStart(2, "0");
+	// const minutesFormatted = String(minutes).padStart(2, "0");
+	const hours = date.getHours();
+	const minutes = date.getMinutes();
+
 	const ampm = hours >= 12 ? "PM" : "AM";
 	let hours12 = hours % 12;
 	if (hours12 === 0) hours12 = 12;
 	const hoursFormatted = String(hours12).padStart(2, "0");
 	const minutesFormatted = String(minutes).padStart(2, "0");
+
 	return `${hoursFormatted}:${minutesFormatted} ${ampm}`;
 }
 

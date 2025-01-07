@@ -127,10 +127,10 @@ export default function Home() {
 
 const styles = StyleSheet.create({
 	background: {
-		height: "100%",
-		width: "100%",
+		// height: "100%",
+		// width: "100%",
 		// justifyContent: "center",
-		alignItems: "center",
+		// alignItems: "center",
 	},
 	container: {
 		width: "100%",

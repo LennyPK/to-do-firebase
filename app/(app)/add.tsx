@@ -11,52 +11,74 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 export default function Add() {
 	const router = useRouter();
-	const currentDate = new Date();
-
-	const [date, setDate] = useState<CalendarDate>(currentDate);
-	const [time, setTime] = useState<{
-		hours: number;
-		minutes: number;
-	}>({ hours: currentDate.getHours(), minutes: currentDate.getMinutes() });
-
-	const [openDatePicker, setOpenDatePicker] = useState(false);
-	const [openTimePicker, setOpenTimePicker] = useState<boolean>(false);
-
-	const onDismissSingle = useCallback(() => {
-		setOpenDatePicker(false);
-	}, [setOpenDatePicker]);
-
-	const onConfirmSingle = useCallback(
-		(params: { date: CalendarDate }) => {
-			setOpenDatePicker(false);
-			setDate(params.date);
-		},
-		[setOpenDatePicker, setDate]
-	);
-
-	const onDismiss = useCallback(() => {
-		setOpenTimePicker(false);
-	}, [setOpenTimePicker]);
-
-	const onConfirm = useCallback(
-		({ hours, minutes }: { hours: number; minutes: number }) => {
-			setOpenTimePicker(false);
-			setTime({ hours, minutes });
-			// console.log({ hours, minutes });
-		},
-		[setOpenTimePicker]
-	);
-
-	// Page starts here
 	const insets = useSafeAreaInsets();
 
 	const defaultTask: Task = {
 		id: "",
 		name: "",
 		due: new Date(),
-		category: "", //,createdAt:Date()
+		category: "",
+		createdAt: new Date(),
 	};
+
 	const [task, setTask] = useState<Task>(defaultTask);
+
+	const [openDatePicker, setOpenDatePicker] = useState(false);
+	const [openTimePicker, setOpenTimePicker] = useState<boolean>(false);
+
+	// Dismiss date picker
+	const onDismissSingle = useCallback(() => {
+		setOpenDatePicker(false);
+	}, [setOpenDatePicker]);
+
+	// Confirm date picker
+	const onConfirmSingle = useCallback(
+		(params: { date: CalendarDate }) => {
+			setOpenDatePicker(false);
+
+			setTask((prevTask) => {
+				const currentDate = prevTask.due || new Date();
+				return {
+					...prevTask,
+					due: new Date(
+						params.date!.getFullYear(),
+						params.date!.getMonth(),
+						params.date!.getDate(),
+						currentDate.getHours(),
+						currentDate.getMinutes()
+					),
+				};
+			});
+		},
+		[setOpenDatePicker, setTask]
+	);
+
+	// Dismiss time picker
+	const onDismiss = useCallback(() => {
+		setOpenTimePicker(false);
+	}, [setOpenTimePicker]);
+
+	// Confirm time picker
+	const onConfirm = useCallback(
+		({ hours, minutes }: { hours: number; minutes: number }) => {
+			setOpenTimePicker(false);
+
+			setTask((prevTask) => {
+				const currentTime = prevTask.due || new Date();
+				return {
+					...prevTask,
+					due: new Date(
+						currentTime.getFullYear(),
+						currentTime.getMonth(),
+						currentTime.getDate(),
+						hours,
+						minutes
+					),
+				};
+			});
+		},
+		[setOpenTimePicker, setTask]
+	);
 
 	const onBackPress = () => {
 		if (task.name.trim() !== "") {
@@ -111,9 +133,9 @@ export default function Add() {
 				/>
 			</View>
 
-			{/* Date */}
+			{/* Date Display*/}
 			<View style={styles.timestampContainer}>
-				<Text style={styles.timestampText}>{dateFormat(date)}</Text>
+				<Text style={styles.timestampText}>{dateFormat(task.due)}</Text>
 				<Button
 					style={styles.button}
 					onPress={() => setOpenDatePicker(true)}
@@ -124,10 +146,10 @@ export default function Add() {
 				</Button>
 			</View>
 
-			{/* Time */}
+			{/* Time Display */}
 			<View style={styles.timestampContainer}>
 				<Text style={styles.timestampText}>
-					{to12HourFormat(time.hours, time.minutes)}
+					{to12HourFormat(task.due)}
 				</Text>
 				<Button
 					style={styles.button}
@@ -139,15 +161,17 @@ export default function Add() {
 				</Button>
 			</View>
 
+			{/* Date Picker */}
 			<DatePickerModal
 				locale="en"
 				mode="single"
 				visible={openDatePicker}
 				onDismiss={onDismissSingle}
-				date={date}
+				date={task.due}
 				onConfirm={onConfirmSingle}
 			/>
 
+			{/* Time Picker */}
 			<TimePickerModal
 				visible={openTimePicker}
 				onDismiss={onDismiss}
@@ -162,9 +186,9 @@ export default function Add() {
 
 const styles = StyleSheet.create({
 	background: {
-		height: "100%",
-		width: "100%",
-		alignItems: "center",
+		// height: "100%",
+		// width: "100%",
+		// alignItems: "center",
 	},
 	container: {
 		width: "100%",

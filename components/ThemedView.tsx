@@ -3,6 +3,7 @@ import {
 	Keyboard,
 	KeyboardAvoidingView,
 	Platform,
+	StyleSheet,
 	TouchableWithoutFeedback,
 	useColorScheme,
 	View,
@@ -33,10 +34,21 @@ export default function ThemedView({
 		>
 			<TouchableWithoutFeedback onPress={Keyboard.dismiss}>
 				<View
-					style={[{ backgroundColor: backgroundColor }, style]}
+					style={[
+						{ backgroundColor: backgroundColor },
+						style,
+						styles.container,
+					]}
 					{...props}
 				/>
 			</TouchableWithoutFeedback>
 		</KeyboardAvoidingView>
 	);
 }
+
+const styles = StyleSheet.create({
+	container: {
+		width: "100%",
+		height: "100%",
+	},
+});
